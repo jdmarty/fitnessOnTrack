@@ -26,6 +26,21 @@ router.get("/api/workouts", async (req, res) => {
 //   }
 // });
 
+// GET last seven workouts
+router.get("/api/workouts/range", async (req, res) => {
+  try {
+    // find all workouts, sort by date descending, and limit 7 results
+    const workouts = await Workout.find()
+    .sort({ day: -1})
+    .limit(7);
+    // return found results
+    res.status(200).json(workouts);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
 // POST new workout
 router.post("/api/workouts", async (req, res) => {
   try {
