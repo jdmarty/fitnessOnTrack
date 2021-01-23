@@ -1,3 +1,4 @@
+// function to generate a color pallete
 function generatePalette() {
   const arr = [
     '#003f5c',
@@ -17,21 +18,24 @@ function generatePalette() {
     '#ff7c43',
     'ffa600',
   ];
-
+  // return the color pallet
   return arr;
 }
 
+// function to populate a chart with data
 function populateChart(data) {
+  // pull the durations, pounds, and workouts out of the argument data
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
+  // set the color pallet
   const colors = generatePalette();
-
+  // target DOM elements
   let line = document.querySelector('#canvas').getContext('2d');
   let bar = document.querySelector('#canvas2').getContext('2d');
   let pie = document.querySelector('#canvas3').getContext('2d');
   let pie2 = document.querySelector('#canvas4').getContext('2d');
-
+  // labels for days of week
   const daysOfWeek = [
     'Sunday',
     'Monday',
@@ -41,12 +45,12 @@ function populateChart(data) {
     'Friday',
     'Saturday',
   ];
-
+  // create labels by selecting dates from argument object
   const labels = data.map(({ day }) => {
     const date = new Date(day);
     return daysOfWeek[date.getDay()];
   });
-
+  // Generate new line chart with the parsed data
   let lineChart = new Chart(line, {
     type: 'line',
     data: {
@@ -86,7 +90,7 @@ function populateChart(data) {
       },
     },
   });
-
+  // Generate new bar chart with the parsed data
   let barChart = new Chart(bar, {
     type: 'bar',
     data: {
@@ -131,7 +135,7 @@ function populateChart(data) {
       },
     },
   });
-
+  // Generate new pie chart with the parsed data
   let pieChart = new Chart(pie, {
     type: 'pie',
     data: {
@@ -151,7 +155,7 @@ function populateChart(data) {
       },
     },
   });
-
+  // Generate new donut chart with parsed data
   let donutChart = new Chart(pie2, {
     type: 'doughnut',
     data: {
@@ -172,34 +176,38 @@ function populateChart(data) {
     },
   });
 }
-
+// function to sum the weight of all exercises in each workout
 function calculateTotalWeight(data) {
   let totals = [];
-
+  // for every workout...
   data.forEach((workout) => {
+    // sum the weight of all exercise
     const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
+      // if it is a resistance exercise add the weight to the total
       if (type === 'resistance') {
         return total + weight;
+      // otherwise return the same total
       } else {
         return total;
       }
     }, 0);
-
+    // push the total weight the the totals array
     totals.push(workoutTotal);
   });
-
+  // return totals array
   return totals;
 }
 
+// function to pull workout names out argument data
 function workoutNames(data) {
   let workouts = [];
-
+  // for each workout
   data.forEach((workout) => {
+    // push the name of each exercise to the array
     workout.exercises.forEach((exercise) => {
       workouts.push(exercise.name);
     });
   });
-
   // return de-duplicated array with JavaScript `Set` object
   return [...new Set(workouts)];
 }
