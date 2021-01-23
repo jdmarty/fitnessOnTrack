@@ -3,7 +3,7 @@ const router = require("express").Router();
 const { Workout } = require("../models");
 
 // GET all workouts
-router.get("/api/workouts", async (req, res) => {
+router.get("/workouts", async (req, res) => {
   try {
     // find and aggregate workouts to add total duration
     const workouts = await Workout.aggregate([
@@ -20,7 +20,7 @@ router.get("/api/workouts", async (req, res) => {
 });
 
 // GET last seven workouts
-router.get("/api/workouts/range", async (req, res) => {
+router.get("/workouts/range", async (req, res) => {
   try {
     // find all workouts, sort by date descending, and limit 7 results
     const workouts = await Workout.aggregate([
@@ -39,7 +39,7 @@ router.get("/api/workouts/range", async (req, res) => {
 });
 
 // POST new workout
-router.post("/api/workouts", async (req, res) => {
+router.post("/workouts", async (req, res) => {
   try {
     // create a new workout from the body data
     const newWorkout = await Workout.create(req.body);
@@ -51,7 +51,7 @@ router.post("/api/workouts", async (req, res) => {
 });
 
 // PUT add an exercise to a workout
-router.put("/api/workouts/:id", async (req, res) => {
+router.put("/workouts/:id", async (req, res) => {
   try {
     // find and update a workout by workout
     const updatedWorkout = await Workout.findOneAndUpdate(
