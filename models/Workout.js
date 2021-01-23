@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const workoutSchema = new Schema({
+const WorkoutSchema = new Schema({
   day: {
     type: Date,
     default: Date.now,
@@ -38,6 +38,19 @@ const workoutSchema = new Schema({
   ],
 });
 
-const Workout = mongoose.model("Workout", workoutSchema);
+WorkoutSchema.methods.setTotalDuration = function () {
+  this.aggregate([
+    {
+      $addFields: {
+        totalDuration: { $sum: { exercise: "$duration" } }
+      }
+    }
+  ])
+  console.log(this.totalDuration);
+  return this.totalDuration;
+};
+
+
+const Workout = mongoose.model("Workout", WorkoutSchema);
 
 module.exports = Workout;
