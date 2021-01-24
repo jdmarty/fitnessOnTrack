@@ -7,8 +7,8 @@ async function init() {
     const workout = await API.getLastWorkout();
     // if a workout is retrieved, navigate to the page for that workout
     if (workout) {
-      location.search = "?id=" + workout._id;
-    // otherwise, hide the continue button
+      // location.search = "?id=" + workout._id;
+      // removed for now doesn't seem to have a point
     } else {
       document.querySelector("#continue-btn").classList.add("d-none")
     }
