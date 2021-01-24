@@ -28,6 +28,7 @@ function populateChart(data) {
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
+  console.log(workouts);
   // set the color pallet
   const colors = generatePalette();
   // target DOM elements
