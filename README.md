@@ -4,6 +4,8 @@
 Deployed: [https://fitness-on-track.herokuapp.com/](https://fitness-on-track.herokuapp.com/)
 Repository: [https://github.com/jdmarty/fitnessOnTrack](https://github.com/jdmarty/fitnessOnTrack)
 
+![Fitness on Track Homepage](https://github.com/jdmarty/fitnessOnTrack/blob/main/public/images/home_screenshot.PNG)
+
 ## Description
 This is a simple exercise tracking app built with MongoDB and express that allows the user to track their daily workouts and maintain a dashboard which describes their workout type, duration, and weight, including tracking multiple workouts per day.
 
@@ -20,6 +22,8 @@ After selecting to start or continue a workout, the user will be asked to select
 
 ### Dashboard
 A user can navigate to the dashboard to see a graphical representation of their past seven workouts, including a line chart showing workout time in minutes, a bar chart of total weight per workout, and a set of pie charts detailing how much time was spent on each exercise type.
+
+![Fitness on Track Dashboard Example](https://github.com/jdmarty/fitnessOnTrack/blob/main/public/images/home_screenshot.PNG)
 
 ## License
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
