@@ -26,9 +26,10 @@ function generatePalette() {
 function populateChart(data) {
   // pull the durations, pounds, and workouts out of the argument data
   let durations = data.map(({ totalDuration }) => totalDuration);
+  console.log(data)
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
-  console.log(workouts);
+  let durationPerExercise = calculateDurationPerExercise(data, workouts)
   // set the color pallet
   const colors = generatePalette();
   // target DOM elements
@@ -145,14 +146,14 @@ function populateChart(data) {
         {
           label: 'Exercises Performed',
           backgroundColor: colors,
-          data: durations,
+          data: durationPerExercise,
         },
       ],
     },
     options: {
       title: {
         display: true,
-        text: 'Exercises Performed',
+        text: 'Exercise Durations (min)',
       },
     },
   });
@@ -197,6 +198,28 @@ function calculateTotalWeight(data) {
   });
   // return totals array
   return totals;
+}
+
+// function to sum the durations of each exercise type
+function calculateDurationPerExercise(data, exercises) {
+  let exerciseDurations = [];
+  // for each exercise type...
+  exercises.forEach(exercise => {
+    const exerciseDuration = data.map(workout => {
+      // reduce the exercises array down to just matching exercise durations
+      return workout.exercises.reduce((total, current) => {
+        if (current.name === exercise) {
+          return total + current.duration
+        } else {
+          return total
+        }
+      }, 0)
+    })
+    // then sum up that array
+    .reduce((a,b) => a + b)
+    exerciseDurations.push(exerciseDuration)
+  })
+  return exerciseDurations
 }
 
 // function to pull workout names out argument data
