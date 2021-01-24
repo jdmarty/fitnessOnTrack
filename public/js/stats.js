@@ -28,7 +28,6 @@ function populateChart(data) {
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
-  console.log(workouts);
   // calculate durations and weight totals for each exercise
   let durationPerExercise = calculateDurationPerExercise(data, workouts);
   let weightPerExercise = calculateWeightPerExercise(data, workouts);
@@ -41,18 +40,25 @@ function populateChart(data) {
   let pie2 = document.querySelector("#canvas4").getContext("2d");
   // labels for days of week
   const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    "Sun ",
+    "Mon ",
+    "Tues ",
+    "Wed ",
+    "Thurs ",
+    "Fri ",
+    "Sat ",
   ];
   // create labels by selecting dates from argument object
   const labels = data.map(({ day }) => {
     const date = new Date(day);
-    return daysOfWeek[date.getDay()];
+    const hourTag = date => {
+      let hour = date.getHours();
+      if (hour === 0) return '12AM'
+      if (hour === 12) return '12PM'
+      if (hour > 12) return (hour-12) +'PM'
+      return hour+'AM'
+    }
+    return daysOfWeek[date.getDay()] + hourTag(date);
   });
   // Generate new line chart with the parsed data
   let lineChart = new Chart(line, {
