@@ -28,6 +28,7 @@ function populateChart(data) {
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
+  console.log(workouts);
   // calculate durations and weight totals for each exercise
   let durationPerExercise = calculateDurationPerExercise(data, workouts);
   let weightPerExercise = calculateWeightPerExercise(data, workouts);
@@ -174,7 +175,7 @@ function populateChart(data) {
     options: {
       title: {
         display: true,
-        text: "Exercises Performed",
+        text: "Exercise Weights (lbs)",
       },
     },
   });
@@ -233,7 +234,7 @@ function calculateWeightPerExercise(data, exercises) {
     // map the total data set
     const exerciseWeight = data
       .map((workout) => {
-        // reduce the exercises array down to just matching exercise durations
+        // reduce the exercises array down to just matching exercise weights
         return workout.exercises.reduce((total, current) => {
           if (current.name === exercise) {
             if (current.weight) return total + current.weight;
