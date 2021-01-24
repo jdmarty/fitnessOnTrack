@@ -24,7 +24,7 @@ function generatePalette() {
 
 // function to populate a chart with data
 function populateChart(data) {
-  // pull the durations, pounds, and workouts out of the argument data
+  // pull the durations, pounds, and workouts out of the API data
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
@@ -33,7 +33,7 @@ function populateChart(data) {
   let weightPerExercise = calculateWeightPerExercise(data, workouts);
   // set the color pallet
   const colors = generatePalette();
-  // target DOM elements
+  // target graph DOM elements
   let line = document.querySelector("#canvas").getContext("2d");
   let bar = document.querySelector("#canvas2").getContext("2d");
   let pie = document.querySelector("#canvas3").getContext("2d");
@@ -48,9 +48,10 @@ function populateChart(data) {
     "Fri ",
     "Sat ",
   ];
-  // create labels by selecting dates from argument object
+  // create labels from the date of each workout
   const labels = data.map(({ day }) => {
     const date = new Date(day);
+    //parse the hour of the workout date
     const hourTag = date => {
       let hour = date.getHours();
       if (hour === 0) return '12AM'
@@ -70,6 +71,7 @@ function populateChart(data) {
           label: "Workout Duration In Minutes",
           backgroundColor: "red",
           borderColor: "red",
+          // total durations data set
           data: durations,
           fill: false,
         },
@@ -154,6 +156,7 @@ function populateChart(data) {
         {
           label: "Exercises Performed",
           backgroundColor: colors,
+          // total duration for each exercise dataset
           data: durationPerExercise,
         },
       ],
@@ -174,6 +177,7 @@ function populateChart(data) {
         {
           label: "Exercises Performed",
           backgroundColor: colors,
+          // total weight for each exercise dataset
           data: weightPerExercise,
         },
       ],
